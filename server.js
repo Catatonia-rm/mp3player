@@ -1,7 +1,7 @@
-const fs = require('fs');
 const mm = require('music-metadata');
 const express = require('express');
 const app = express();
+const uint = require('uint8array-extras');
 
 app.use(express.static(__dirname));
 app.get('/', (req, res) => {
@@ -10,7 +10,15 @@ app.get('/', (req, res) => {
 app.get('/assets/music/:track/meta', (req, res) => {
   console.log(req.params.track);
   mm.parseFile(__dirname + '/assets/music/' + req.params.track)
-    .then(data => { res.json(data); console.log(data) })
+    .then(meta => {
+
+      const picture = mm.selectCover(meta.common.picture);
+      const src = `data:${picture.format};base64,${uint.uint8ArrayToBase64(picture.data)}`;
+      meta.common.picture = src;
+      console.log(src);
+
+      res.json(meta)
+    })
     .catch(error => {
       console.error(error);
       res.send(error);

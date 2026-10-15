@@ -21,6 +21,7 @@
     "fm": "^0.8.0",
     "http": "^0.0.1-security",
     "music-metadata": "^12.2.1",
+    "uint8array-extras": "^1.6.0",
     "whatwg-url": "^17.3.0"
   }
 }
