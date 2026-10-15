@@ -12,10 +12,12 @@ app.get('/assets/music/:track/meta', (req, res) => {
   mm.parseFile(__dirname + '/assets/music/' + req.params.track)
     .then(meta => {
 
-      const picture = mm.selectCover(meta.common.picture);
-      const src = `data:${picture.format};base64,${uint.uint8ArrayToBase64(picture.data)}`;
-      meta.common.picture = src;
-      console.log(src);
+      //process cover
+      if (meta.common.picture) {
+        const picture = mm.selectCover(meta.common.picture);
+        const src = `data:${picture.format};base64,${uint.uint8ArrayToBase64(picture.data)}`;
+        meta.common.picture = src;
+      }
 
       res.json(meta)
     })
