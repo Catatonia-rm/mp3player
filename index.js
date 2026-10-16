@@ -6,6 +6,7 @@ const artist = document.getElementById('artist');
 const album = document.getElementById('album');
 const remaining = document.getElementById('remaining');
 const total = document.getElementById('total');
+const slider = document.getElementById('slider');
 
 const playbtn = document.getElementById("playbtn");
 const nextbtn = document.getElementById("nextbtn");
@@ -13,6 +14,7 @@ const prevbtn = document.getElementById("prevbtn");
 
 let paused = true;
 let curTrack = 0;
+let dragging = false;
 
 class Track {
   constructor(file) {
@@ -61,6 +63,26 @@ playbtn.addEventListener("click", function() {
     audioElement.pause();
     paused = true;
   }
+})
+
+//load duration and slider
+audioElement.addEventListener("loadedmetadata", function() {
+  total.innerText = new Date(audioElement.duration * 1000).toISOString().substring(14, 19);
+  slider.max = audioElement.duration;
+  setInterval(function() {
+    if (!dragging) {
+      slider.value = audioElement.currentTime;
+    }
+    remaining.innerText = new Date(audioElement.currentTime * 1000).toISOString().substring(14, 19);
+  }, 100)
+})
+slider.addEventListener("mousedown", function() {
+  dragging = true;
+})
+slider.addEventListener("click", function() {
+  audioElement.currentTime = slider.value;
+  audioElement.play();
+  dragging = false;
 })
 
 nextbtn.addEventListener("click", function() {

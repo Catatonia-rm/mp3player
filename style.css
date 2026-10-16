@@ -69,8 +69,11 @@ body {
 
 #buttons {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
+}
+
+#buttons>* {
+  margin: 10px;
 }
 
 img {
