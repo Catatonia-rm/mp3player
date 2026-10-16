@@ -24,18 +24,15 @@ class Track {
       this.cover = meta.common.picture;
     }).catch(error => { console.error(error) });
   };
-  async display() {
+  async play() {
+    audioElement.src = this.file;
+    audioElement.play();
+    paused = false;
     await this.metaloaded;
     title.innerText = this.title;
     artist.innerText = this.artist;
     album.innerText = this.album;
     cover.src = this.cover;
-  }
-  play() {
-    audioElement.src = this.file;
-    audioElement.play();
-    paused = false;
-    this.display();
   }
 }
 let tracks =
@@ -46,7 +43,14 @@ let tracks =
     new Track('./assets/music/01 - Duvet.flac'),
     new Track('./assets/music/02 - Malcolm Todd - Roommates.mp3')
   ]
-tracks[0].display();
+tracks[curTrack].metaloaded.then(() => {
+  title.innerText = tracks[curTrack].title;
+  artist.innerText = tracks[curTrack].artist;
+  album.innerText = tracks[curTrack].album;
+  cover.src = tracks[curTrack].cover;
+  audioElement.src = tracks[curTrack].file;
+}
+)
 
 playbtn.addEventListener("click", function() {
   if (paused) {
