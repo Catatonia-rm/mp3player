@@ -8,16 +8,27 @@
 
 <body>
   <h1>mp3player</h1>
-  <img id="cover">
-  <div id="title">title</div>
-  <div id="artist">artist</div>
-  <div id="album">album</div>
-  <div id="remaining"></div>
-  <div id="total"></div>
-
-  <button id="prevbtn">prev</button>
-  <button id="playbtn">play</button>
-  <button id="nextbtn">next</button>
+  <div id="player">
+    <img id="cover">
+    <div id="spacer"></div>
+    <div id="flexbox">
+      <div id="info">
+        <div id="title">title</div>
+        <div id="artist">artist</div>
+        <div id="album">album</div>
+      </div>
+      <div id="time">
+        <div id="remaining">00:00</div>
+        <input type="range" id="slider">
+        <div id="total">00:00</div>
+      </div>
+      <div id="buttons">
+        <button id="prevbtn">prev</button>
+        <button id="playbtn">play</button>
+        <button id="nextbtn">next</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 <script src="index.js"></script>
