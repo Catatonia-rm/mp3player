@@ -11,15 +11,16 @@ app.get('/assets/music/:track/meta', (req, res) => {
   console.log(req.params.track);
   mm.parseFile(__dirname + '/assets/music/' + req.params.track)
     .then(meta => {
+      const picture = mm.selectCover(meta.common.picture);
+      const src = `data:${picture.format};base64,${uint.uint8ArrayToBase64(picture.data)}`;
+      const json = {
+        title: meta.common.title,
+        artist: meta.common.artist,
+        album: meta.common.album,
+        picture: src,
+      };
 
-      //process cover
-      if (meta.common.picture) {
-        const picture = mm.selectCover(meta.common.picture);
-        const src = `data:${picture.format};base64,${uint.uint8ArrayToBase64(picture.data)}`;
-        meta.common.picture = src;
-      }
-
-      res.json(meta)
+      res.json(json);
     })
     .catch(error => {
       console.error(error);

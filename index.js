@@ -18,10 +18,10 @@ class Track {
   constructor(file) {
     this.file = file;
     this.metaloaded = fetch(`${file}/meta`).then(data => data.json()).then(meta => {
-      this.title = meta.common.title;
-      this.artist = meta.common.artist;
-      this.album = meta.common.album;
-      this.cover = meta.common.picture;
+      this.title = meta.title;
+      this.artist = meta.artist;
+      this.album = meta.album;
+      this.cover = meta.picture;
     }).catch(error => { console.error(error) });
   };
   async play() {
